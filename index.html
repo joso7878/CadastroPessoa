@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Pessoas</title>
+</head>
+<body>
+    <h1>Cadastro de Pessoas</h1>
+
+    <!-- Formulário para entrada de dados -->
+    <form id="pessoaForm">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required><br>
+
+        <label for="idade">Idade:</label>
+        <input type="number" id="idade" name="idade" required><br>
+
+        <label for="cidade">Cidade:</label>
+        <input type="text" id="cidade" name="cidade" required><br>
+
+        <button type="button" onclick="cadastrarPessoa()">Cadastrar</button>
+        <button type="button" onclick="listarPessoas()">Listar</button>
+        <a href="delete.html"><button type="button">Deletar Usuário</button></a>
+    </form>
+
+    <!-- Resultado das operações -->
+    <div id="resultado"></div>
+
+    <script>
+        let pessoas = [];
+        let proximoID = 1;
+
+        // Funcao para cadastrar uma nova pessoa
+        function cadastrarPessoa() {
+            const nome = document.getElementById("nome").value;
+            const idade = parseInt(document.getElementById("idade").value);
+            const cidade = document.getElementById("cidade").value;
+
+            const pessoa = { nome, idade, cidade, id: proximoID++ };
+            pessoas.push(pessoa);
+
+            // Salvar a lista de pessoas no armazenamento local (localStorage)
+            localStorage.setItem('pessoas', JSON.stringify(pessoas));
+
+            document.getElementById("resultado").innerHTML = `Pessoa ${nome} cadastrada com sucesso.`;
+        }
+
+        // Funcao para listar pessoas cadastradas
+        function listarPessoas() {
+            let lista = '';
+
+            for (let i = 0; i < pessoas.length; i++) {
+                const pessoa = pessoas[i];
+                lista += `ID: ${i + 1}<br>`;
+                lista += `Nome: ${pessoa.nome}<br>`;
+                lista += `Idade: ${pessoa.idade} anos<br>`;
+                lista += `Cidade: ${pessoa.cidade}<br><br>`;
+            }
+
+            document.getElementById("resultado").innerHTML = `Pessoas cadastradas:<br>${lista}`;
+        }
+    </script>
+</body>
+</html>
