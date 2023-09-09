@@ -9,7 +9,6 @@
 <body>
     <h1>Deletar Usuário</h1>
     
-    <!-- Lista de usuários cadastrados -->
     <ul id="listaUsuarios" class="lista-usuarios">
     
     </ul>
@@ -29,19 +28,19 @@
         function confirmarDelecaoUsuario() {
             const idUsuario = parseInt(document.getElementById("idUsuario").value);
 
-            // Obter a lista de pessoas do armazenamento local (localStorage)
+
             const pessoasJSON = localStorage.getItem('pessoas');
             let pessoas = JSON.parse(pessoasJSON) || [];
 
             const pessoaIndex = pessoas.findIndex(pessoa => pessoa.id === idUsuario);
 
             if (pessoaIndex !== -1) {
-                const pessoaDeletada = pessoas[pessoaIndex]; // Armazena a pessoa a ser deletada
+                const pessoaDeletada = pessoas[pessoaIndex]; 
                 const confirmacao = confirm(`Tem certeza que deseja deletar o usuário com ID ${idUsuario} (${pessoaDeletada.nome})?`);
 
                 if (confirmacao) {
                     deletarPessoa(idUsuario);
-                    preencherListaUsuarios(); // Atualiza a lista após a exclusão
+                    preencherListaUsuarios(); 
                 }
             } else {
                 alert("Usuário não encontrado.");

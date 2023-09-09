@@ -1,64 +1,53 @@
 let pessoas = [];
 let proximoID = 1;
 
-// Funcao para cadastrar uma nova pessoa
-function cadastrarPessoa(pessoa) {
-    pessoa.id = proximoID++;
-    pessoas.push(pessoa);
-}
+function cadastrarPessoa() {
+  const nome = document.getElementById("nome").value;
+  const idade = parseInt(document.getElementById("idade").value);
+  const cidade = document.getElementById("cidade").value;
 
-// Funcao para atualizar pessoa de acordo com seu ID
-function atualizarPessoa(id, camposAtualizados) {
-    const pessoaIndex = pessoas.findIndex(pessoa => pessoa.id === id);
+  const pessoa = { nome, idade, cidade };
+  pessoa.id = proximoID++;
+  pessoas.push(pessoa);
 
-    if (pessoaIndex !== -1) {
-        pessoas[pessoaIndex] = { ...pessoas[pessoaIndex], ...camposAtualizados };
-    }
-}
-
-// Funcao para deletar pessoa
-function deletarPessoa(id) {
-    pessoas = pessoas.filter(pessoa => pessoa.id !== id);
+  document.getElementById("resultado").innerHTML = `Pessoa ${nome} cadastrada com sucesso.`;
 }
 
 function listarPessoas() {
-    return pessoas;
+    const lista = pessoas.map(pessoa => `ID: ${pessoa.id}, Nome: ${pessoa.nome}, Idade: ${pessoa.idade} anos, Cidade: ${pessoa.cidade}`).join("<br>");
+    document.getElementById("resultado").innerHTML = `Pessoas cadastradas:<br>${lista}`;
+  }
+  
+function atualizarPessoa() {
+  const id = parseInt(prompt("Digite o novo ID da pessoa:"));
+  const pessoa = pessoas.find(p => p.id === id);
+
+  if (pessoa) {
+    const novosDados = {};
+    novosDados.idade = parseInt(prompt("Digite a idade da pessoa atualizada:") || pessoa.idade);
+    novosDados.cidade = prompt("Digite a nova cidade da pessoa:") || pessoa.cidade;
+
+    Object.assign(pessoa, novosDados);
+    document.getElementById("resultado").innerHTML = `Pessoa com ID ${id} atualizada com sucesso.`;
+  } else {
+    alert("Pessoa não encontrada.");
+  }
 }
 
-function excluirPessoa(id) {
-    const pessoaIndex = pessoas.findIndex(pessoa => pessoa.id === id);
+function deletarPessoa() {
+  const id = parseInt(prompt("Digite o ID da pessoa para deletar:"));
+  const pessoaIndex = pessoas.findIndex(p => p.id === id);
 
-    if (pessoaIndex !== -1) {
-        pessoas.splice(pessoaIndex, 1); // Remove a pessoa da lista
-        document.getElementById("resultado").innerHTML = `Pessoa com ID ${id} excluída.`;
-    } else {
-        document.getElementById("resultado").innerHTML = `Pessoa com ID ${id} não encontrada.`;
+  if (pessoaIndex !== -1) {
+    pessoas.splice(pessoaIndex, 1);
+
+
+    for (let i = 0; i < pessoas.length; i++) {
+      pessoas[i].id = i + 1;
     }
+
+    document.getElementById("resultado").innerHTML = `Pessoa com ID ${id} deletada com sucesso.`;
+  } else {
+    alert("Pessoa não encontrada.");
+  }
 }
-
-function atualizarPessoaPorId(id, camposAtualizados) {
-    const pessoaIndex = pessoas.findIndex(pessoa => pessoa.id === id);
-
-    if (pessoaIndex !== -1) {
-        pessoas[pessoaIndex] = { ...pessoas[pessoaIndex], ...camposAtualizados };
-        document.getElementById("resultado").innerHTML = `Pessoa com ID ${id} atualizada.`;
-    } else {
-        document.getElementById("resultado").innerHTML = `Pessoa com ID ${id} não encontrada.`;
-    }
-}
-
-
-// Cadastrar uma pessoa
-cadastrarPessoa({ nome: 'João', idade: 30, cidade: 'São Paulo' });
-
-// Atualizar os dados de uma pessoa com ID 1
-atualizarPessoa(1, { idade: 31 });
-
-// Deletar uma pessoa com ID 1
-deletarPessoa(1);
-
-// Listar todas as pessoas cadastradas
-const lista = listarPessoas();
-console.log(lista);
-
-

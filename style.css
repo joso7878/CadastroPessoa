@@ -9,7 +9,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Isso ajustará o conteúdo à altura total da tela */
+    height: 100vh; 
 }
 
 /* Estilos para o cabeçalho */
@@ -43,7 +43,7 @@ input[type="number"] {
 }
 
 button {
-    background-color: #007bff;
+    background-color: #8fb5dd;
     color: #fff;
     padding: 10px 20px;
     border: none;
@@ -52,10 +52,9 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #258eff;
 }
 
-/* Estilos para o resultado */
 #resultado {
     background-color: #fff;
     padding: 20px;
